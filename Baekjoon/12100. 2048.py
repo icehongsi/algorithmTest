@@ -1,12 +1,6 @@
 import copy
 
-def df
-
 def solution(board, count = 0):
-    print(count)
-    for i in board:
-        print(i)
-
     global maximum
     mark = False
     if count == 5:
@@ -82,7 +76,11 @@ board = []
 for i in range(int(input())):
     board.append(list(map(int, input().split())))
 
+
+
+
 maximum = 0
 solution(board)
 print(maximum)
+
 
