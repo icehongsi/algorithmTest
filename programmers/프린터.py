@@ -1,10 +1,11 @@
+import time
 from collections import deque
 
 
 def solution(priorities, location):
     queue = []
     for k, v in enumerate(priorities):
-        queue.append([v, k])
+        queue.append([v, k]) #value, index
     idx, count = 0, 0
     while queue:
         print(queue)
@@ -17,7 +18,30 @@ def solution(priorities, location):
                 idx = i % len(queue)
                 break
 
-    return None
+    return 0
 
-print(solution([1,1,3,3,5,5], 3))
-print(solution([1, 1, 9, 1, 1, 1],0))
+
+def solution(priorities, location):
+    queue = deque([])
+    for k, v in enumerate(priorities):
+        queue.append([v, k])
+    count = 1
+      # 프린터 찾기 O(n)
+    priority_order = sorted(priorities)
+
+    while queue:
+        priority, idx = queue.popleft()
+
+        if location == idx and priority == priority_order[-1]:
+            return count
+        elif priority == priority_order[-1]:
+            priority_order.pop()
+            count += 1
+        else:
+            queue.append([priority, idx])
+
+
+
+
+
+print(solution([1, 1, 9, 1, 1, 1], 0))
