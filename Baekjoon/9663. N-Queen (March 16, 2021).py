@@ -1,32 +1,59 @@
 import copy
 
 
-def solution(r):
-    global board, count
-    if r == len(board): #다 도달하였을 때
-        count += 1
-
-    for c in range(len(board)):
-        print(r, c)
-        if sum(board[x][c] for x in range(r))\
-            or sum(board[r - x][c + x] for x in range(min(r, len(board) - c - 1), 1))\
-                or sum(board[r - x][c - x] for x in range(1, min(r, c) + 1)):
-            continue
-
-        board[r][c] = 1
-        solution(r + 1)
-        board[r][c] = 0
+def solution():
+    n = int(input())
+    board = [[0] * n for _ in range(n)]
 
 
+    def backtracking(r = 0):
+        global count
+        max_num = n
+        if r == len(board):
+
+            #for i in board:
+            #    print(i)
+            #print("-"*50)
+
+            count += 2
+            return
+
+        for c in range(max_num): #차례대로 순회
+            flag = True
+
+            # 위쪽 (같은열 다른 행) 체크
+            for i in range(r-1, -1, -1):
+                if board[i][c] == 1:
+                    flag = False
+                    break
+            # 왼쪽 대각선 체크
+
+            r1, c1 = r, c
+
+            while r1 > 0 and c1 > 0:
+                r1 -= 1
+                c1 -= 1
+                if board[r1][c1] == 1:
+                    flag = False
+                    break
+
+            r1, c1 = r, c
+            while r1 > 0 and c1 < len(board) - 1:
+                r1 -= 1
+                c1 += 1
+                if board[r1][c1] == 1:
+                    flag = False
+                    break
+
+            if flag:
+                board[r][c] = 1
+                backtracking(r + 1)
+                board[r][c] = 0
+
+    backtracking()
 
 
 
-board = [[0] * 5 for _ in range(int(input()))]
 count = 0
-solution(0)
+solution()
 print(count)
-
-
-
-
-print(board)
